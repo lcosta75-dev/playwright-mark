@@ -1,14 +1,7 @@
-import { test, expect, APIRequestContext } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 import { TaskModel } from './fixtures/task.model'
+import { deleteTaskByHelper, postTask } from './support/helpers'
 
-async function deleteTaskByHelper(request: APIRequestContext, taskName: string) {
-    await request.delete('http://localhost:3333/helper/tasks/' + taskName)
-}
-
-async function postTask(request: APIRequestContext, task: TaskModel) {
-    const newTask = await request.post('http://localhost:3333/tasks', { data: task })
-    expect(newTask.ok()).toBeTruthy()
-}
 
 test('deve poder cadastrar uma nova tarefa', async ({ page, request }) => {
 
