@@ -5,6 +5,11 @@ async function deleteTaskByHelper(request: APIRequestContext, taskName: string) 
     await request.delete('http://localhost:3333/helper/tasks/' + taskName)
 }
 
+async function postTask(request: APIRequestContext, task: TaskModel) {
+    const newTask = await request.post('http://localhost:3333/tasks', { data: task })
+    expect(newTask.ok()).toBeTruthy()
+}
+
 test('deve poder cadastrar uma nova tarefa', async ({ page, request }) => {
 
     const task: TaskModel = {
@@ -25,19 +30,14 @@ test('deve poder cadastrar uma nova tarefa', async ({ page, request }) => {
 
 })
 
-test.only('não deve permitir tarefa duplicada', async ({ page, request }) => {
+test('não deve permitir tarefa duplicada', async ({ page, request }) => {
     const task: TaskModel = {
         name: 'Comprar Ketchup',
         is_done: false
     }
 
-    //deletando registro pela API
     await deleteTaskByHelper(request, task.name)
-
-    //cadastrando registro pela API
-    const newTask = await request.post('http://localhost:3333/tasks', { data: task })
-    //.ok() retorna status code e espera que seja true
-    expect(newTask.ok()).toBeTruthy()
+    await postTask(request, task)
 
     await page.goto('http://localhost:3000')
 
