@@ -1,25 +1,28 @@
 import { test, expect } from '@playwright/test'
-
-
+import { TaskModel } from './fixtures/task.model'
 
 test('deve poder cadastrar uma nova tarefa', async ({ page, request }) => {
-    const taskName = 'Ler um livro de TypeScript'
 
-    await request.delete('http://localhost:3333/helper/tasks/' + taskName)
+    const task: TaskModel = {
+        name: 'Ler um livro de TypeScript',
+        is_done: false
+    }
+
+    await request.delete('http://localhost:3333/helper/tasks/' + task.name)
 
     await page.goto('http://localhost:3000')
 
     const inputTaskName = page.locator('input[class*=InputNewTask]')
-    await inputTaskName.fill(taskName)
+    await inputTaskName.fill(task.name)
     await page.click('css=button >> text=Create')
 
-    const target = page.locator('css=.task-item p >> text=' + taskName)
+    const target = page.locator('css=.task-item p >> text=' + task.name)
     await expect(target).toBeVisible()
 
 })
 
 test.only('não deve permitir tarefa duplicada', async ({ page, request }) => {
-    const task = {
+    const task: TaskModel = {
         name: 'Comprar Ketchup',
         is_done: false
     }
@@ -28,7 +31,7 @@ test.only('não deve permitir tarefa duplicada', async ({ page, request }) => {
     await request.delete('http://localhost:3333/helper/tasks/' + task.name)
 
     //cadastrando registro pela API
-    const newTask = await request.post('http://localhost:3333/tasks', {data: task})
+    const newTask = await request.post('http://localhost:3333/tasks', { data: task })
     //.ok() retorna status code e espera que seja true
     expect(newTask.ok()).toBeTruthy()
 
