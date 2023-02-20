@@ -10,5 +10,9 @@
     "required": {
         "name": "",
         "is_done": false
+    },
+    "update": {
+        "name": "Pagar fatura do cartão de crédito",
+        "is_done": false
     }
 }

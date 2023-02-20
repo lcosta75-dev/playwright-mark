@@ -9,3 +9,4 @@ export async function postTask(request: APIRequestContext, task: TaskModel) {
     const newTask = await request.post('http://localhost:3333/tasks', { data: task })
     expect(newTask.ok()).toBeTruthy()
 }
+
