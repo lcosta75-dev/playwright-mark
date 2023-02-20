@@ -1,0 +1,14 @@
+{
+    "success": {
+        "name": "Ler um livro de TypeScript",
+        "is_done": false
+    },
+    "duplicate": {
+        "name": "Comprar Ketchup",
+        "is_done": false
+    },
+    "required": {
+        "name": "",
+        "is_done": false
+    }
+}
