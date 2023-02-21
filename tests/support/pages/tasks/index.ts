@@ -21,12 +21,13 @@ export class TasksPage {
 
     async toggle(taskName: string) {
         const target = this.page.locator(`xpath=//p[text()="${taskName}"]/..//button[contains(@class, "Toggle")]`)
-        target.click
+        target.click()
     }
 
     async remove(taskName: string) {
+        console.log('Deletando a tarefa: ' + taskName)
         const target = this.page.locator(`xpath=//p[text()="${taskName}"]/..//button[contains(@class, "Delete")]`)
-        target.click
+        target.click()
     }
 
     async shouldHaveText(taskName: string) {
@@ -36,6 +37,7 @@ export class TasksPage {
 
     async shouldNotExist(taskName: string) {
         const target = this.page.locator(`css=.task-item p >> text=${taskName}`)
+        console.log(target)
         await expect(target).not.toBeVisible()
     }
 
