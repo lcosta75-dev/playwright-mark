@@ -12,7 +12,7 @@ test.describe('cadastro', () => {
     
         const tasksPage: TasksPage = new TasksPage(page)
     
-        await page.goto('http://localhost:3000')
+        await tasksPage.go()
         await tasksPage.create(task)
         await tasksPage.shouldHaveText(task.name)
     })
@@ -25,7 +25,7 @@ test.describe('cadastro', () => {
     
         const tasksPage: TasksPage = new TasksPage(page)
     
-        await page.goto('http://localhost:3000')
+        await tasksPage.go()
         await tasksPage.create(task)
         await tasksPage.alertHaveText('Task already exists!')
     })
@@ -35,7 +35,7 @@ test.describe('cadastro', () => {
     
         const tasksPage: TasksPage = new TasksPage(page)
     
-        await page.goto('http://localhost:3000')
+        await tasksPage.go()
         await tasksPage.create(task)
     
         //convertendo elemento para um objeto HTML
@@ -53,14 +53,14 @@ test.describe('atualização', () => {
     
         const tasksPage: TasksPage = new TasksPage(page)
         
-        await page.goto('http://localhost:3000')
+        await tasksPage.go()
         await tasksPage.toggle(task.name)
         await tasksPage.shouldBeDone(task.name)
     })
 })
 
 test.describe('exclusão', () => {
-    test.only('deve excluir uma tarefa', async ({ page, request }) => {
+    test('deve excluir uma tarefa', async ({ page, request }) => {
         const task = data.delete as TaskModel
     
         await deleteTaskByHelper(request, task.name)
@@ -68,7 +68,7 @@ test.describe('exclusão', () => {
     
         const tasksPage: TasksPage = new TasksPage(page)
         
-        await page.goto('http://localhost:3000')
+        await tasksPage.go()
         await tasksPage.remove(task.name)
         await tasksPage.shouldNotExist(task.name)
     })

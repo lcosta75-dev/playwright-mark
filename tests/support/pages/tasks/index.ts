@@ -11,7 +11,7 @@ export class TasksPage {
     }
 
     async go() {
-        await this.page.goto('http://localhost:3000')
+        await this.page.goto('/')
     }
 
     async create(task: TaskModel) {
@@ -21,12 +21,12 @@ export class TasksPage {
 
     async toggle(taskName: string) {
         const target = this.page.locator(`xpath=//p[text()="${taskName}"]/..//button[contains(@class, "Toggle")]`)
-        target.click
+        await target.click()
     }
 
     async remove(taskName: string) {
         const target = this.page.locator(`xpath=//p[text()="${taskName}"]/..//button[contains(@class, "Delete")]`)
-        target.click
+        await target.click()
     }
 
     async shouldHaveText(taskName: string) {
